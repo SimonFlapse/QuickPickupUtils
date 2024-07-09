@@ -16,7 +16,7 @@ import java.util.Map;
 @ExtensionInfo(
         Title = "Quick Pickup Utils",
         Description = "Chat commands to quickly pickup items in your habbo flat",
-        Version = "1.0",
+        Version = "1.0.1",
         Author = "SimonFlapse"
 )
 
