@@ -58,8 +58,10 @@ public class PickupHandler {
         if (args.length > 2) {
             maxAmount = canParseInt(args[2]);
         } else if (!argument.equals("floor") && !argument.equals("wall")) {
-            argument = "all";
             maxAmount = canParseInt(args[1]);
+            if (maxAmount != -1) {
+                argument = "all";
+            }
         }
 
         if (argument.equals("wall")) {
