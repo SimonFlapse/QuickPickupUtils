@@ -29,7 +29,7 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.simonflapse.gearth.QuickPickupUtilsExtension</mainClass>
+                            <mainClass>com.simonflarup.gearth.QuickPickupUtilsExtension</mainClass>
                             <useUniqueVersions>false</useUniqueVersions>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
@@ -52,7 +52,7 @@
                     <outputDirectory>${project.build.directory}/bin</outputDirectory>
                     <archive>
                         <manifest>
-                            <mainClass>com.simonflapse.gearth.QuickPickupUtilsExtension</mainClass>
+                            <mainClass>com.simonflarup.gearth.QuickPickupUtilsExtension</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
