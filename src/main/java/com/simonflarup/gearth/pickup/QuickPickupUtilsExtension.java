@@ -2,7 +2,6 @@ package com.simonflarup.gearth.pickup;
 
 import com.google.common.eventbus.Subscribe;
 import com.simonflarup.gearth.origins.OHExtension;
-import com.simonflarup.gearth.origins.events.activeobject.OnStuffDataUpdatedEvent;
 import com.simonflarup.gearth.origins.events.chat.OnChatEvent;
 import com.simonflarup.gearth.origins.models.incoming.room.OHActiveObject;
 import com.simonflarup.gearth.origins.models.incoming.room.OHItem;
@@ -25,11 +24,6 @@ public class QuickPickupUtilsExtension extends OHExtension {
 
     public QuickPickupUtilsExtension(String[] args) {
         super(args);
-    }
-
-    @Subscribe
-    void onStuffDataUpdate(OnStuffDataUpdatedEvent event) {
-        System.out.println("Stuff data updated: " + event.getTargetId() + " - " + event.getNewData());
     }
 
     @Subscribe
