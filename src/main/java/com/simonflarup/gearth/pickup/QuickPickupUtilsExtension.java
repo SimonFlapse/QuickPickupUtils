@@ -1,11 +1,12 @@
-package com.simonflarup.gearth;
+package com.simonflarup.gearth.pickup;
 
 import com.google.common.eventbus.Subscribe;
-import com.simonflarup.gearth.events.OHExtension;
-import com.simonflarup.gearth.events.type.activeobject.OnStuffDataUpdatedEvent;
-import com.simonflarup.gearth.events.type.chat.OnChatEvent;
-import com.simonflarup.gearth.parsers.OHActiveObject;
-import com.simonflarup.gearth.parsers.OHItem;
+import com.simonflarup.gearth.origins.OHExtension;
+import com.simonflarup.gearth.origins.events.activeobject.OnStuffDataUpdatedEvent;
+import com.simonflarup.gearth.origins.events.chat.OnChatEvent;
+import com.simonflarup.gearth.origins.models.incoming.room.OHActiveObject;
+import com.simonflarup.gearth.origins.models.incoming.room.OHItem;
+import com.simonflarup.gearth.origins.services.OHFlatManager;
 import gearth.extensions.ExtensionInfo;
 import gearth.protocol.packethandler.shockwave.packets.ShockPacketOutgoing;
 
@@ -24,11 +25,6 @@ public class QuickPickupUtilsExtension extends OHExtension {
 
     public QuickPickupUtilsExtension(String[] args) {
         super(args);
-    }
-
-    @Override
-    protected void initExtension() {
-        super.initExtension();
     }
 
     @Subscribe
@@ -56,8 +52,9 @@ public class QuickPickupUtilsExtension extends OHExtension {
     }
 
     public void pickupItems(String[] args) {
-        Map<Integer, OHActiveObject> activeObjects = getFlatManager().getActiveObjectsInFlat();
-        Map<Integer, OHItem> items = getFlatManager().getItemsInFlat();
+        OHFlatManager flatManager = getServiceProvider().getFlatManager();
+        Map<Integer, OHActiveObject> activeObjects = flatManager.getActiveObjectsInFlat();
+        Map<Integer, OHItem> items = flatManager.getItemsInFlat();
 
         if (activeObjects.isEmpty() && items.isEmpty()) {
             String message = String.format("{out:WHISPER}{s:\" %s - %s\"}", "INFO", "There are no items in the room");

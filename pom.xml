@@ -15,6 +15,8 @@
         <logback.version>1.3.14</logback.version>
         <guava.version>33.2.1-jre</guava.version>
         <junit.version>5.10.3</junit.version>
+
+        <g-java-parser.version>0.1.0</g-java-parser.version>
     </properties>
 
     <build>
@@ -29,7 +31,7 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.simonflarup.gearth.QuickPickupUtilsExtension</mainClass>
+                            <mainClass>com.simonflarup.gearth.pickup.QuickPickupUtilsExtension</mainClass>
                             <useUniqueVersions>false</useUniqueVersions>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
@@ -52,7 +54,7 @@
                     <outputDirectory>${project.build.directory}/bin</outputDirectory>
                     <archive>
                         <manifest>
-                            <mainClass>com.simonflarup.gearth.QuickPickupUtilsExtension</mainClass>
+                            <mainClass>com.simonflarup.gearth.pickup.QuickPickupUtilsExtension</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -106,6 +108,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.simonflarup.gearth</groupId>
+            <artifactId>G-Java-Parser</artifactId>
+            <version>${g-java-parser.version}</version>
         </dependency>
 
         <!-- Test dependencies -->
