@@ -2,7 +2,7 @@ package com.simonflarup.gearth.pickup;
 
 import com.google.common.eventbus.Subscribe;
 import com.simonflarup.gearth.origins.OHExtension;
-import com.simonflarup.gearth.origins.events.chat.OnChatEvent;
+import com.simonflarup.gearth.origins.events.chat.OnChatOutEvent;
 import gearth.extensions.ExtensionInfo;
 
 @ExtensionInfo(
@@ -19,13 +19,12 @@ public class QuickPickupUtilsExtension extends OHExtension {
     }
 
     @Subscribe
-    void onChat(OnChatEvent event) {
-        String message = event.getMessage();
+    void onChat(OnChatOutEvent event) {
+        String message = event.get().getMessage();
 
         if (!message.startsWith(":pickup")) {
             return;
         }
-        OnChatHandler.onChat(event, message, this::sendToServer, getServiceProvider().getFlatManager());
+        OnChatHandler.onChat(event, message, getServiceProvider());
     }
-
 }

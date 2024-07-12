@@ -16,7 +16,7 @@
         <guava.version>33.2.1-jre</guava.version>
         <junit.version>5.10.3</junit.version>
 
-        <g-java-parser.version>0.1.0</g-java-parser.version>
+        <g-java-parser.version>0.2.0</g-java-parser.version>
     </properties>
 
     <build>

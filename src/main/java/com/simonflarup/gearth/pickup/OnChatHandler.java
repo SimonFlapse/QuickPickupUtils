@@ -1,14 +1,16 @@
 package com.simonflarup.gearth.pickup;
 
-import com.simonflarup.gearth.origins.events.chat.OnChatEvent;
+import com.simonflarup.gearth.origins.events.chat.OnChatOutEvent;
 import com.simonflarup.gearth.origins.services.OHFlatManager;
+import com.simonflarup.gearth.origins.services.OHServiceProvider;
 
 public final class OnChatHandler {
     private OnChatHandler() {
     }
 
-    public static void onChat(OnChatEvent event, String message, SendToServer sendToServer, OHFlatManager flatManager) {
-        PickupHandler pickupHandler = new PickupHandler(sendToServer);
+    public static void onChat(OnChatOutEvent event, String message, OHServiceProvider serviceProvider) {
+        PickupHandler pickupHandler = new PickupHandler(serviceProvider.getPacketSender());
+        OHFlatManager flatManager = serviceProvider.getFlatManager();
 
         if (message.startsWith(":pickup") && message.split(" ").length == 1) {
             event.silenceMessage();

@@ -2,17 +2,20 @@ package com.simonflarup.gearth.pickup;
 
 import com.simonflarup.gearth.origins.models.incoming.room.OHActiveObject;
 import com.simonflarup.gearth.origins.models.incoming.room.OHItem;
+import com.simonflarup.gearth.origins.models.outgoing.chat.OHChatOut;
+import com.simonflarup.gearth.origins.models.outgoing.chat.OHChatOutType;
+import com.simonflarup.gearth.origins.models.outgoing.room.OHAddStripItem;
+import com.simonflarup.gearth.origins.models.outgoing.room.OHStripItemType;
 import com.simonflarup.gearth.origins.services.OHFlatManager;
-import gearth.protocol.packethandler.shockwave.packets.ShockPacket;
-import gearth.protocol.packethandler.shockwave.packets.ShockPacketOutgoing;
+import com.simonflarup.gearth.origins.services.OHPacketSender;
 
 import java.util.Arrays;
 import java.util.Map;
 
 public class PickupHandler {
-    private final SendToServer sendToServer;
+    private final OHPacketSender sendToServer;
 
-    public PickupHandler(SendToServer sendToServer) {
+    public PickupHandler(OHPacketSender sendToServer) {
         this.sendToServer = sendToServer;
     }
 
@@ -31,23 +34,19 @@ public class PickupHandler {
         }
     }
 
-    private boolean sendToServer(ShockPacket packet) {
-        return this.sendToServer.sendToServer(packet);
-    }
-
     public void pickupItems(String[] args, OHFlatManager flatManager) {
         Map<Integer, OHActiveObject> activeObjects = flatManager.getActiveObjectsInFlat();
         Map<Integer, OHItem> items = flatManager.getItemsInFlat();
 
         if (activeObjects.isEmpty() && items.isEmpty()) {
-            String message = String.format("{out:WHISPER}{s:\" %s - %s\"}", "INFO", "There are no items in the room");
-            sendToServer(new ShockPacketOutgoing(message));
+            String message = String.format("%s - %s", "INFO", "There are no items in the room");
+            sendToServer.toServer(new OHChatOut(message, OHChatOutType.WHISPER));
             throttlePackets(500);
-            message = String.format("{out:WHISPER}{s:\" %s - %s\"}", "INFO", "Try re-entering the room");
-            sendToServer(new ShockPacketOutgoing(message));
+            message = String.format("%s - %s", "INFO", "Try re-entering the room");
+            sendToServer.toServer(new OHChatOut(message, OHChatOutType.WHISPER));
             throttlePackets(500);
-            message = String.format("{out:WHISPER}{s:\" %s - %s\"}", "DEBUG", Arrays.toString(args));
-            sendToServer(new ShockPacketOutgoing(message));
+            message = String.format("%s - %s", "DEBUG", Arrays.toString(args));
+            sendToServer.toServer(new OHChatOut(message, OHChatOutType.WHISPER));
             return;
         }
 
@@ -132,12 +131,14 @@ public class PickupHandler {
     }
 
     public void pickup(OHItem item) {
-        sendToServer(new ShockPacketOutgoing(String.format("ACnew item %s", item.getId())));
+        OHAddStripItem stripItem = new OHAddStripItem(item.getId(), OHStripItemType.getFrom(item));
+        sendToServer.toServer(stripItem);
         throttlePackets(500);
     }
 
     public void pickup(OHActiveObject activeObject) {
-        sendToServer(new ShockPacketOutgoing(String.format("ACnew stuff %s", activeObject.getId())));
+        OHAddStripItem stripItem = new OHAddStripItem(activeObject.getId(), OHStripItemType.getFrom(activeObject));
+        sendToServer.toServer(stripItem);
         throttlePackets(500);
     }
 }
